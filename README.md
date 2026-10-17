@@ -1,119 +1,128 @@
-# BIMBridge: Claude et ChatGPT connectés à Revit
+# BIMBridge: connect Claude and ChatGPT to Revit
 
-Parlez à votre maquette Revit. BIMBridge installe en une fois le **serveur MCP intégré à pyRevit 7**, le connecte à Claude Desktop (plan gratuit compris), à Claude Code et à ChatGPT, et ajoute des **skills BIMBridge** pour que l'IA travaille proprement dans vos modèles.
+Talk to your Revit model. BIMBridge sets up the **MCP server built into pyRevit 7** in one step, connects it to Claude Desktop (free plan included), Claude Code and ChatGPT, and adds **BIMBridge skills** so the AI works cleanly in your models.
 
-> Le pont entre l'IA et Revit est le serveur MCP officiel de [pyRevit](https://github.com/pyrevitlabs/pyRevit) (pyRevitLabs). BIMBridge apporte l'installation en un prompt, la configuration des applications d'IA, les skills et la documentation en français.
+> The bridge between the AI and Revit is the official MCP server of [pyRevit](https://github.com/pyrevitlabs/pyRevit) (pyRevitLabs). BIMBridge adds the one-prompt install, the AI app setup, the skills and the documentation.
 
-## Ce que vous obtenez
+## What you get
 
-- **L'IA lit votre modèle ouvert** : niveaux, éléments, paramètres, vues, sélection.
-- **L'IA modifie le modèle** avec des scripts exécutés dans Revit, **après votre validation** dans Revit (**Keep** pour garder, **Discard** pour annuler). Chaque modification gardée s'annule en un seul Ctrl+Z.
-- **L'IA voit le résultat** grâce à des captures de vues.
-- **Skills BIMBridge** : une méthode de travail (unités métriques, construction par étapes, vérification visuelle) et une revue MEP (connecteurs ouverts, réseaux, isolation, pentes, circuits).
+- **The AI reads your open model**: levels, elements, parameters, views, selection.
+- **The AI edits the model** with scripts that run inside Revit, **after you approve them** in Revit (**Keep** to accept, **Discard** to cancel). Each kept change can be undone with a single Ctrl+Z.
+- **The AI sees the result** through view captures.
+- **BIMBridge skills**: a working method (metric units, staged builds, visual checks) and an MEP review (open connectors, systems, insulation, slopes, circuits).
 
-## Prérequis
+## Requirements
 
-- Windows 10 ou 11, Revit 2022 ou plus récent
-- Claude Desktop (gratuit ou payant), Claude Code, ou l'application ChatGPT avec Codex
-- pyRevit 7 ou plus récent : installé automatiquement s'il manque
+- Windows 10 or 11, Revit 2022 or newer
+- Claude Desktop (free or paid), Claude Code, or the ChatGPT app with Codex
+- pyRevit 7 or newer: installed automatically if missing
 
 ## Installation
 
-### Option A : un seul prompt (Claude Pro ou plus)
+### Option A: one prompt (Claude Pro or higher)
 
-Dans Claude Desktop, ouvrez l'onglet **Code** (ou lancez Claude Code), puis collez :
+In Claude Desktop, open the **Code** tab (or start Claude Code), then paste:
 
 ```
-Installe BIMBridge pour connecter Claude à mon Revit : https://github.com/kenpro0/bimbridge-mcp
-Suis le fichier INSTALL.md étape par étape, puis dis-moi quoi faire ensuite.
+Install BIMBridge to connect Claude to my Revit: https://github.com/kenpro0/bimbridge-mcp
+Follow the INSTALL.md file step by step, then tell me what to do next.
 ```
 
-Claude vous demande l'autorisation avant chaque commande. Windows peut aussi demander l'autorisation d'installer .NET ou WebView2 pour pyRevit : cliquez sur **Oui**.
+Claude follows [INSTALL.md](INSTALL.md), a step-by-step guide written for AI agents. It asks before each command, unless you set the permission mode to **Auto**. Windows may also ask permission to install .NET or WebView2 for pyRevit: click **Yes**.
 
-### Option B : une commande (plan gratuit, ou sans Claude Code)
+### Option B: one command (free plan, or without Claude Code)
 
-1. Fermez Revit.
-2. Ouvrez **PowerShell** (pas en administrateur) et collez :
+1. Close Revit.
+2. Open **PowerShell** (not as administrator) and paste:
 
 ```powershell
 irm https://raw.githubusercontent.com/kenpro0/bimbridge-mcp/main/install.ps1 | iex
 ```
 
-### Ensuite
+### Next
 
-1. Démarrez Revit et ouvrez un modèle. Si Revit est déjà ouvert : **pyRevit > Reload**.
-2. Quittez complètement votre application d'IA et rouvrez-la. Pour Claude Desktop : clic droit sur l'icône Claude près de l'horloge, puis **Quitter**.
-3. Essayez un des prompts ci-dessous.
+1. Start Revit and open a model. If Revit asks about the pyRevit add-in, click **Always Load**. If Revit is already open: **pyRevit > Reload**.
+2. Quit your AI app completely and open it again. For Claude Desktop: right-click the Claude icon near the clock, then **Quit**.
+3. Start a new chat and try one of the prompts below.
 
-## Prompts à essayer
+## Prompts to try
 
-- « Lis le skill bimbridge, puis décris mon modèle Revit ouvert. »
-- « Crée une maison de 10 × 8 m sur deux niveaux de 3 m, avec un toit à deux pentes. »
-- « Fais une capture 3D de la maquette et dis-moi ce que tu vois. »
-- « Fais une revue MEP de mon modèle avec le skill mep-review. »
-- « Sélectionne toutes les gaines qui ne sont dans aucun réseau. »
+- "Use the bimbridge skill and tell me what model is open in Revit right now."
+- "Create a 10 × 8 m house with two 3 m levels and a gable roof."
+- "Take a 3D capture of the model and tell me what you see."
+- "Run an MEP review of my model with the mep-review skill."
+- "Select all the ducts that are not in any system."
+- "Create the Statue of Liberty in the open model." (attach a few reference photos to the message)
 
-## Comment ça marche
+Write in any language: the AI answers in yours.
+
+## How it works
 
 ```
-Claude / ChatGPT  ⇄  serveur MCP de pyRevit (pyrevit.exe mcp)  ⇄  agent pyRevit dans Revit  ⇄  votre modèle
+Claude / ChatGPT  ⇄  pyRevit MCP server (pyrevit.exe mcp)  ⇄  pyRevit agent in Revit  ⇄  your model
 ```
 
-- Les lectures se font sans confirmation. Chaque modification affiche une demande de validation dans Revit, avec les éléments modifiés isolés à l'écran.
-- La politique par défaut est `ask` (validation à chaque modification). Elle se change dans **pyRevit > Settings > Agent Runtime (MCP)** ou en ligne de commande :
-  - `pyrevit configs agent policy readonly` : lecture seule
-  - `pyrevit configs agent policy ask` : validation à chaque modification
-  - `pyrevit configs agent policy auto` : sans validation (pratique pour filmer une démo, à utiliser seulement sur une copie du modèle)
+- Reading needs no confirmation. Every change shows an approval prompt in Revit, with the changed elements isolated on screen.
+- The default policy is `ask` (approve every change). Change it in **pyRevit > Settings > Agent Runtime (MCP)** or from the command line:
+  - `pyrevit configs agent policy readonly`: read only
+  - `pyrevit configs agent policy ask`: approve every change
+  - `pyrevit configs agent policy auto`: no approval (handy for filming a demo; use it only on a copy of the model)
 
-## Sécurité et confidentialité
+## Security and privacy
 
-- Ce que l'IA lit dans votre modèle (noms, paramètres, résultats) est envoyé au fournisseur de l'IA (Anthropic, OpenAI). Vérifiez les règles de confidentialité de vos projets avant de l'utiliser sur un vrai projet.
-- pyRevit garde l'historique des scripts exécutés pendant 14 jours dans `%APPDATA%\pyRevit\agent`.
-- Faites vos premiers essais sur une copie de votre modèle.
+- What the AI reads in your model (names, parameters, results) is sent to the AI provider (Anthropic, OpenAI). Check your projects' confidentiality rules before using it on a real project.
+- pyRevit keeps the history of the scripts it runs for 14 days in `%APPDATA%\pyRevit\agent`.
+- Run your first tests on a copy of your model.
 
-## Skills inclus
+## Included skills
 
-| Skill | Rôle |
+| Skill | What it does |
 |---|---|
-| `bimbridge` | Méthode de travail : unités métriques, construction par étapes taguées et rejouables, vérification par capture, réponses dans votre langue |
-| `mep-review` | Revue MEP en lecture seule : contenu, connecteurs ouverts, éléments hors réseau, liste des réseaux, gaines et tuyaux non isolés, pentes d'évacuation, appareils sans circuit |
+| `bimbridge` | Working method: metric units, tagged and re-runnable build stages, visual checks with captures, replies in your language |
+| `mep-review` | Read-only MEP review: content, open connectors, elements outside any system, list of systems, uninsulated ducts and pipes, drainage slopes, devices without a circuit |
 
-Les skills sont copiés dans `%APPDATA%\pyRevit\agent\skills`. Vous pouvez y ajouter les vôtres (un dossier avec un fichier `SKILL.md`).
+The skills are copied to `%APPDATA%\pyRevit\agent\skills`. You can add your own there (a folder with a `SKILL.md` file).
 
-## Mettre à jour
+## Update
 
-Relancez la commande d'installation. Elle met à jour les skills et la configuration sans rien dupliquer.
+Run the install command again. It updates the skills and the configuration without duplicating anything.
 
-## Désinstaller
+## Uninstall
 
 ```powershell
 irm https://raw.githubusercontent.com/kenpro0/bimbridge-mcp/main/uninstall.ps1 | iex
 ```
 
-Retire les skills BIMBridge et les connexions MCP ajoutées, et désactive l'agent pyRevit. pyRevit reste installé.
+This removes the BIMBridge skills and the MCP connections it added, and turns off the pyRevit agent. pyRevit stays installed.
 
-## Dépannage
+## Troubleshooting
 
-| Problème | Solution |
+| Problem | Fix |
 |---|---|
-| « Revit is open » pendant l'installation | Fermez Revit et relancez la commande. |
-| L'IA ne voit pas les outils `pyrevit` | Quittez complètement l'application (icône près de l'horloge > Quitter) et rouvrez-la. |
-| « No running Revit » | Démarrez Revit, ou cliquez sur **pyRevit > Reload**. |
-| Une modification semble bloquée | Revit attend votre validation (**Keep** / **Discard**). |
-| Autre problème | Ouvrez une [issue](../../issues) en joignant le fichier `%TEMP%\bimbridge-install.log`. |
+| "Revit is open" during the install | Close Revit and run the command again. |
+| The AI doesn't see the `pyrevit` tools | Quit the app completely (icon near the clock > Quit) and reopen it. |
+| "No running Revit" | Start Revit, or click **pyRevit > Reload**. |
+| A change seems stuck | Revit is waiting for your approval (**Keep** / **Discard**). |
+| Anything else | Open an [issue](../../issues) and attach the file `%TEMP%\bimbridge-install.log`. |
 
-## Crédits et licence
+## Credits and license
 
-- Serveur MCP et agent Revit : [pyRevit](https://github.com/pyrevitlabs/pyRevit), par pyRevitLabs (licence GPL-3.0).
-- BIMBridge (installateur, skills, documentation) : licence MIT, voir [LICENSE](LICENSE).
+- MCP server and Revit agent: [pyRevit](https://github.com/pyrevitlabs/pyRevit), by pyRevitLabs (GPL-3.0 license).
+- BIMBridge (installer, skills, documentation): MIT license, see [LICENSE](LICENSE).
 
 ---
 
-## English
+## En français
 
-BIMBridge sets up the MCP server built into pyRevit 7 for Claude Desktop (free plan included), Claude Code and ChatGPT / Codex in one step, and adds BIMBridge skills: a metric, staged modeling method and a read-only MEP review.
+BIMBridge connecte Claude Desktop (plan gratuit compris), Claude Code et ChatGPT / Codex à Revit grâce au serveur MCP intégré à pyRevit 7, et ajoute les skills BIMBridge.
 
-- **With Claude Code**: ask it to install `https://github.com/kenpro0/bimbridge-mcp` by following [INSTALL.md](INSTALL.md).
-- **Without it**: close Revit, then run `irm https://raw.githubusercontent.com/kenpro0/bimbridge-mcp/main/install.ps1 | iex` in PowerShell.
+- **Avec Claude Pro ou plus** : dans l'onglet **Code** de Claude Desktop, collez ce prompt :
 
-Then start Revit, restart your AI app, and ask: "Read the bimbridge skill, then describe my open Revit model." Model changes wait for your approval in Revit (Keep / Discard).
+  ```
+  Installe BIMBridge pour connecter Claude à mon Revit : https://github.com/kenpro0/bimbridge-mcp
+  Suis le fichier INSTALL.md étape par étape, puis dis-moi quoi faire ensuite.
+  ```
+
+- **Plan gratuit** : fermez Revit, puis collez dans PowerShell : `irm https://raw.githubusercontent.com/kenpro0/bimbridge-mcp/main/install.ps1 | iex`
+
+Ensuite, démarrez Revit, quittez complètement Claude et rouvrez-le, puis demandez : « Lis le skill bimbridge, puis décris mon modèle Revit ouvert. » Chaque modification attend votre validation dans Revit (**Keep** / **Discard**), et l'IA vous répond en français.

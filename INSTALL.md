@@ -50,7 +50,7 @@ If `pyrevit` is not found in this shell, use the full path: `%APPDATA%\pyRevit-M
    - Claude Desktop: right-click the Claude icon near the clock, then **Quit**.
    - Claude Code: start a new session.
    - ChatGPT desktop app: quit and reopen it.
-3. In a new chat, try: « Lis le skill bimbridge, puis décris mon modèle Revit ouvert. » (or in English: "Read the bimbridge skill, then describe my open Revit model.")
+3. In a new chat, try: "Use the bimbridge skill and tell me what model is open in Revit right now." Give this example in the user's language.
 4. When the AI changes the model, Revit shows an approval prompt first: **Keep** or **Discard**. Each kept change is one undo step.
 
 You are probably running in the session that did the install: the `pyrevit` tools only appear after the restart.

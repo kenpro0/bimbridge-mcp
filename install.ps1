@@ -20,7 +20,7 @@ function Install-BIMBridge {
     $ErrorActionPreference = 'Stop'
     $ProgressPreference = 'SilentlyContinue'
 
-    $BridgeVersion = '0.1.0'
+    $BridgeVersion = '0.1.1'
     $Repo = 'kenpro0/bimbridge-mcp'
     if ($env:BIMBRIDGE_REPO) { $Repo = $env:BIMBRIDGE_REPO }
     $Branch = 'main'
@@ -476,8 +476,7 @@ function Install-BIMBridge {
     Write-Host '  1. Start Revit and open a model. If Revit is already open, click pyRevit > Reload.'
     Write-Host '  2. Quit your AI app completely and open it again.'
     Write-Host '     Claude Desktop: right-click the Claude icon near the clock > Quit. Claude Code: start a new session.'
-    Write-Host '  3. Try: "Lis le skill bimbridge, puis decris mon modele Revit ouvert."'
-    Write-Host '     or:  "Read the bimbridge skill, then describe my open Revit model."'
+    Write-Host '  3. Try: "Use the bimbridge skill and tell me what model is open in Revit right now."'
     Write-Host '  4. When Claude changes the model, Revit asks you first: Keep or Discard.'
     Write-Host ''
 }
